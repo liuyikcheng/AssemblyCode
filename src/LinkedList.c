@@ -23,3 +23,9 @@ struct LinkedList *createLinkedList(){
 	list -> length = 0;
 	return list;
 }
+
+void initLinkedList(struct LinkedList *list){
+	list -> head = NULL;
+	list -> tail = NULL;
+	list -> length = 0;
+}

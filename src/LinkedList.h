@@ -15,7 +15,8 @@ struct LinkedList{
 	int length;
 };
 
-
+extern struct LinkedList tcbList;
 struct ListElement *createListElement(int value);
 struct LinkedList *createLinkedList();
+void initLinkedList(struct LinkedList *list);
 #endif // linkedlist_H

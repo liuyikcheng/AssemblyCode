@@ -42,6 +42,8 @@
 #include "stm32f4xx_it.h"
 #include "stm32f4xx_hal.h"
 #include "switchSp.h"
+#include "LinkedList.h"
+#include "addList.h"
 
 /** @addtogroup STM32F4xx_HAL_Examples
   * @{
@@ -151,6 +153,9 @@ void PendSV_Handler(void)
 {
 }
 
+uint32_t vSp;
+uint32_t curSp;
+
 /**
   * @brief  This function handles SysTick Handler.
   * @param  None
@@ -158,8 +163,12 @@ void PendSV_Handler(void)
   */
 void SysTick_Handler(void)
 {
-//	clearSysTickCountFlag();
-	switchSp();
+//	clearSysTickCountFlag()
+	vSp = tcbList.head->next->sp; // get the next tcb sp value
+	switchSp();										// save the current cpu sp to curSp and switch the scpu sp to vSp
+	tcbList.head->sp = curSp;			// save the curSp valur to the head's sp of the tcb linked list
+	tcbSwitch(&tcbList);					//	switch the tcb linked list
+	
   HAL_IncTick();
 }
 

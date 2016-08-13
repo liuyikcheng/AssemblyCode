@@ -17,11 +17,11 @@ extern uint16_t twoBytes;				// Import from AssemblyModule.s
 extern int task1Sp;							// Import from SaveRegisters.s
 
 uint32_t switchTask;
-uint32_t vSp;
-uint32_t vSpNext;
+uint32_t vSpMain;
+uint32_t virtualSp;
 
 uint32_t variableInC = 0xdeaf;
-struct LinkedList *tcbList ;
+struct LinkedList tcbList ;
 Context context;
 
 void task1();
@@ -36,55 +36,56 @@ void waitForever(void) {
 }
 
 void task1(){
-	
-	switchTask = (uint32_t)&task2;
-	vSpNext = task2Tcb.sp;
-	saveRegs();
-	
-	while(1);
+	while(1); //do something...
 	
 }
 
 void task2(){
-
-	switchTask = (uint32_t)&task3;
-	vSpNext = task3Tcb.sp;
-	saveRegs();
-	
-	while(1);
+	while(1); //do something...
 	
 }
 
 void task3(){
-	switchTask = (uint32_t)&task1;
-	vSpNext = task1Tcb.sp;
-	saveRegs();
-	
-	while(1);
+	while(1); //do something...
 	
 }
 
 int main() {
 	initSysTick();
-	tcbList = createLinkedList();
-	
+	initLinkedList(&tcbList);
 	noArgFunc();
-
+	
+	initTcbMain();
   initTcb1();
 	initTcb2();
 	initTcb3();
 	
-	addList(&task1Tcb, tcbList);
-	addList(&task2Tcb, tcbList);
-	addList(&task3Tcb, tcbList);
+	//add tcb to linked list
+	addList(&taskMain, &tcbList);
+	addList(&task1Tcb, &tcbList);
+	addList(&task2Tcb, &tcbList);
+	addList(&task3Tcb, &tcbList);
 	
-	switchTask = (uint32_t)&task1;
-	vSpNext = task1Tcb.sp;
-
+	
+	//push tcb2 stack
+	switchTask = (uint32_t)&task2; 
+	virtualSp = task2Tcb.sp;
 	saveRegs();
+	task2Tcb.sp = virtualSp;
 	
+	//push tcb3 stack
+	switchTask = (uint32_t)&task3;
+	virtualSp = task3Tcb.sp;
+	saveRegs();
+	task3Tcb.sp = virtualSp;
+	
+	//push tcb1 stack
+	switchTask = (uint32_t)&task1; 
+	virtualSp = task1Tcb.sp;
+	saveRegs();
+	task1Tcb.sp = virtualSp;
 
-	while(1);
+	while(1);	
 
 
 	return 0;				// Verify that 'variableInC' now contains 0xB19FACE

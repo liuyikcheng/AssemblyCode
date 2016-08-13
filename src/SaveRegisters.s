@@ -8,9 +8,9 @@ task1Sp		DCD     1
 saveRegs	PROC
 					EXPORT  saveRegs
 					IMPORT	switchTask
-					IMPORT	vSpNext
+					IMPORT	virtualSp
 					
-					ldr			r13, = vSpNext
+					ldr			r13, = virtualSp
 					ldr			r13, [r13]
 					
 					
@@ -28,9 +28,9 @@ saveRegs	PROC
 
 					push		{r0-r9}
 					
-					ldr			r9, =vSpNext
+					ldr			r9, = virtualSp
 					str			r13, [r9]
-
+					
 
 					BX			lr									; Return to caller
 								

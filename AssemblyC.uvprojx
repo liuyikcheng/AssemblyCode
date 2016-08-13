@@ -497,6 +497,16 @@
               <FileType>2</FileType>
               <FilePath>.\src\LoadRegisters.s</FilePath>
             </File>
+            <File>
+              <FileName>switchSp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\src\switchSp.h</FilePath>
+            </File>
+            <File>
+              <FileName>switchSp.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\src\switchSp.s</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

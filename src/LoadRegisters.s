@@ -9,7 +9,6 @@ loadRegs 	PROC
 					
 					
 					
-					
 					BX			lr									; Return to caller
 								
 					ENDP

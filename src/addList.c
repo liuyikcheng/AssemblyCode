@@ -45,7 +45,7 @@ Tcb *elementRemoved(struct LinkedList *list){
 	return preElem;
 }
 
-void elementSwitch(struct LinkedList *list){
+void tcbSwitch(struct LinkedList *list){
 	
 	Tcb* temp = list->head;
 	

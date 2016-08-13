@@ -33,11 +33,12 @@ struct Tcb_t{
 } ;
 
 
-
+extern Tcb taskMain;
 extern Tcb task1Tcb;
 extern Tcb task2Tcb;
 extern Tcb task3Tcb;
 
+void initTcbMain();
 void initTcb1();
 void initTcb2();
 void initTcb3();

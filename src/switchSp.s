@@ -8,13 +8,14 @@ taskSp		DCD     1
 switchSp	PROC
 					EXPORT  switchSp
 					IMPORT	switchTask
-					IMPORT	vSpNext
+					IMPORT	curSp
+					IMPORT 	vSp
+				
+					ldr			r9, = curSp					;save current sp value to curSp
+					str			r13, [r9]
 					
-				;	ldr			r9, = vSp						
-				;	str			r13, [r9]
-						
-					ldr			r13, = vSpNext			;load sp value to r13
-					ldr			r13, [r13]
+					ldr			r13, = vSp					;load vSp value to r13
+					ldr			r13, [r13]					
 						
 					BX			lr									; Return to caller
 								
